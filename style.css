@@ -1,0 +1,448 @@
+/* Base Styles & Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Header & Navigation */
+.glass-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px 5%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #1a365d;
+}
+
+.highlight { color: #c5a059; }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* 1. Automatic Technology Slideshow */
+.hero {
+    height: 85vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-slideshow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0;
+}
+
+.slide {
+    position: absolute;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: slideShow 15s infinite;
+}
+
+/* Animation for the background to move automatically */
+@keyframes slideShow {
+    0% { opacity: 0; transform: scale(1.1); }
+    10% { opacity: 1; }
+    33% { opacity: 1; }
+    43% { opacity: 0; transform: scale(1); }
+    100% { opacity: 0; }
+}
+
+.slide:nth-child(1) { background-image: url('https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80'); animation-delay: 0s; }
+.slide:nth-child(2) { background-image: url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80'); animation-delay: 5s; }
+.slide:nth-child(3) { background-image: url('https://images.unsplash.com/photo-1526738549149-8e07eca2c592?q=80'); animation-delay: 10s; }
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 800px; padding: 0 20px; }
+
+/* 2 & 3. Why Trust Us Section */
+.section-pad { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+
+.trust-title-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.trust-header {
+    font-size: 2.5rem;
+    color: #1a365d;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.title-line {
+    width: 60px;
+    height: 4px;
+    background: #c5a059;
+    margin: 10px auto;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.trust-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-top: 5px solid #c5a059;
+    transition: transform 0.3s ease;
+}
+
+.trust-box:hover { transform: translateY(-10px); }
+.trust-box i { font-size: 3.5rem; color: #1a365d; margin-bottom: 20px; }
+.trust-box h3 { font-size: 1.3rem; margin-bottom: 15px; color: #1a365d; }
+
+/* 4, 5, & 6. Owner Preview Section */
+.owner-preview-section {
+    background: #1a365d;
+    padding: 100px 5%;
+    color: white;
+}
+
+.owner-flex {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.owner-image-container {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
+}
+
+.owner-image-container img {
+    width: 100%;
+    border: 8px solid #c5a059;
+    border-radius: 20px;
+}
+
+.owner-content {
+    flex: 1.5;
+    min-width: 300px;
+}
+
+.earnings-text {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #c5a059;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hinglish-desc {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-owner {
+    display: inline-block;
+    background: #c5a059;
+    color: #1a365d;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.btn-owner:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .owner-flex { flex-direction: column; text-align: center; }
+    .hero h1 { font-size: 2rem; }
+}
+/* =========================
+   OWNER PAGE STYLES
+========================= */
+
+.owner-card {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.owner-image-box {
+  width: 220px;
+  height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  flex-shrink: 0;
+}
+
+.owner-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.owner-text-box {
+  background: #0e0e0e;
+  color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 520px;
+}
+
+.owner-quote {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.owner-promise {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  opacity: 0.95;
+}
+
+.owner-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* =========================
+   AWARDS SECTION
+========================= */
+/* ===== AWARDS FIX ===== */
+
+.award-card {
+  width: 160px;
+  background: transparent; /* IMPORTANT */
+  text-align: center;
+}
+
+.award-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0e0e0e;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+  margin-bottom: 10px;
+}
+
+.award-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* FILLS THE BOX */
+  display: block;
+}
+
+.award-card p {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+
+/* =========================
+   MOBILE ONLY
+========================= */
+
+@media (max-width: 768px) {
+
+  .owner-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .owner-image-box {
+    width: 160px;
+    height: 160px;
+  }
+
+  .owner-text-box {
+    width: 100%;
+    padding: 18px;
+  }
+
+  .owner-quote {
+    font-size: 1.1rem;
+  }
+
+  .owner-desc {
+    font-size: 0.85rem;
+  }
+
+}
+
+/* =========================
+   HORIZONTAL AWARDS – BLACK BOX, NO PADDING
+========================= */
+
+.awards-flex {
+  display: flex;
+  flex-direction: row;     /* HORIZONTAL */
+  justify-content: left;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.award-card {
+  width: 180px;
+  text-align: center;
+}
+
+.award-img {
+  width: 180px;
+  height: 180px;
+  background: #000;        /* PURE BLACK */
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.award-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* IMAGE FILLS BOX */
+  display: block;
+}
+
+.award-card p {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+.awards-title {
+    text-align: center;
+}
+/* =========================
+   MOBILE CENTERED LAYOUT
+========================= */
+
+@media (max-width: 768px) {
+
+  /* OWNER SECTION */
+  .owner-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* CENTER EVERYTHING */
+    gap: 18px;
+    margin-top: 40px;
+  }
+
+  .owner-image-box {
+    width: 160px;
+    height: 160px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+  }
+
+  .owner-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .owner-text-box {
+    width: 100%;
+    background: #0e0e0e;
+    color: #fff;
+    padding: 18px;
+    border-radius: 16px;
+    text-align: center;      /* TEXT CENTERED */
+  }
+
+  /* AWARDS SECTION */
+  .awards-flex {
+    display: flex;
+    justify-content: center; /* CENTER ROW */
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;         /* WRAP IF NEEDED */
+  }
+
+  .award-card {
+    width: 140px;
+    text-align: center;
+  }
+
+  .award-img {
+    width: 140px;
+    height: 140px;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+  }
+
+  .award-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+}
