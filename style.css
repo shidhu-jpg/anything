@@ -446,3 +446,145 @@ nav {
   }
 
 }
+/* General Page Styling */
+body {
+    background-color: #050505; /* Deep black background */
+    color: #e0d1b3; /* Soft gold text color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 40px;
+}
+
+/* Header Section */
+.main-header {
+    text-align: center;
+    margin-bottom: 50px;
+    background: radial-gradient(circle, rgba(60,45,20,1) 0%, rgba(0,0,0,1) 70%);
+    padding: 40px 0;
+}
+
+.main-header h1 {
+    font-size: 3rem;
+    color: #d4af37; /* Metallic Gold */
+    margin: 0;
+    font-weight: serif;
+}
+
+/* The Grid Layout for 20+ products */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Individual Product Cards */
+.product-card {
+    background: linear-gradient(145deg, #1a1a1a, #000000);
+    border: 1px solid #332b1a; /* Subtle gold border */
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    border-color: #d4af37;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #222;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+/* Mobile-First Reset */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Removes blue flash on touch */
+}
+
+body {
+    background-color: #000;
+    color: #d1c4a9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 15px;
+}
+
+/* Luxury Header */
+.mobile-header {
+    text-align: center;
+    padding: 40px 10px;
+    background: radial-gradient(circle at top, #2c2112 0%, #000 80%);
+}
+
+.mobile-header h1 {
+    font-size: 28px;
+    color: #e5c07b;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.mobile-header p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* The Grid: 2 columns on Mobile */
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two items per row */
+    gap: 15px;
+    padding-top: 20px;
+}
+
+/* The Card */
+.product-card {
+    background: #0a0a0a;
+    border: 1px solid #1f1a10; /* Subtle gold border */
+    padding: 10px;
+    text-align: center;
+}
+
+/* Image container to keep everything uniform */
+.image-box {
+    background: #000;
+    border: 1px solid #2d2618;
+    aspect-ratio: 1 / 1.2; /* Matches the tall look in your image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures images fill the box perfectly */
+}
+
+.product-card h3 {
+    font-size: 14px;
+    margin: 10px 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #fff;
+}
+
+/* For larger phones/Tablets - scale up slightly */
+@media (min-width: 600px) {
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
