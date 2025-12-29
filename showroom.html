@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Showroom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= PRODUCTS LIST ================= -->
+<div class="container">
+
+    <div class="product-card" onclick="openProduct('23')">
+        <div class="card-img-wrapper">
+            <img src="products/23/1.jpg" alt="Product 23">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('24')">
+        <div class="card-img-wrapper">
+            <img src="products/24/1.jpg" alt="Product 24">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('25')">
+        <div class="card-img-wrapper">
+            <img src="products/25/1.jpg" alt="Product 25">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('26')">
+        <div class="card-img-wrapper">
+            <img src="products/26/1.jpg" alt="Product 26">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('27')">
+        <div class="card-img-wrapper">
+            <img src="products/27/1.jpg" alt="Product 27">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('28')">
+        <div class="card-img-wrapper">
+            <img src="products/28/1.jpg" alt="Product 28">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('29')">
+        <div class="card-img-wrapper">
+            <img src="products/29/1.jpg" alt="Product 29">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('32')">
+        <div class="card-img-wrapper">
+            <img src="products/32/1.jpg" alt="Product 32">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('33')">
+        <div class="card-img-wrapper">
+            <img src="products/33/1.jpg" alt="Product 33">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+    <div class="product-card" onclick="openProduct('37')">
+        <div class="card-img-wrapper">
+            <img src="products/37/1.jpg" alt="Product 37">
+        </div>
+        <div class="card-info">
+            <h3>View Product Details</h3>
+            <p>Click to see images and description</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= MODAL ================= -->
+<div id="productModal" class="modal hidden">
+    <span class="close-modal" onclick="closeProduct()">&times;</span>
+
+    <div class="modal-content">
+
+        <div class="gallery-container">
+            <div class="swiper-wrapper" id="swiperWrapper"></div>
+
+            <div class="nav-overlay">
+                <button class="nav-btn" onclick="prevSlide()">&#10094;</button>
+                <button class="nav-btn" onclick="nextSlide()">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="description-section">
+            <h2>Product Description</h2>
+            <div id="descriptionText"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= MANUAL DESCRIPTIONS ================= -->
+<div id="product-descriptions" style="display:none">
+
+    <div id="desc-23"><p>Heater best </p></div>
+    <div id="desc-24"><p>Crompton 95 L Desert Air Cooler  (Blue, White, ACGC-SUREBREEZE 95).</p></div>
+    <div id="desc-25"><p>USHA HH 4003 HH 4003 Halogen Room Heater.</p></div>
+    <div id="desc-26"><p>MOTOROLA g05 (Forest Green, 64 GB)  (4 GB RAM)</p></div>
+    <div id="desc-27"><p>LG 201 L Direct Cool Single Door 5 Star Refrigerator with Base Drawer with Smart Inverter Compressor, Fast Ice Making  (Blue Charm, GL-D211HBCZ)</p></div>
+    <div id="desc-28"><p>Samsung 215 L Direct Cool Single Door 5 Star Refrigerator with Digital Inverter  (Paradise Bloom Blue, RR23D2H359U/HL)</p></div>
+    <div id="desc-29"><p>Symphony 80 L Room/Personal Air Cooler  (White, touch)</p></div>
+    <div id="desc-32"><p>Voltas 177 L Single Door Standard Deep Freezer  (Grey, CVF205SA2-P-PL, 2 Star).</p></div>
+    <div id="desc-33"><p>LG 242 L Frost Free Double Door 3 Star Refrigerator with DoorCooling+ & Smart Inverter Compressor  (Shiny Steel, GL-I292RPZX)</p></div>
+    <div id="desc-37"><p>ORPAT OEH-1220 2000-Watt White Fan Room Heater</p></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
