@@ -10,13 +10,13 @@ function openProduct(productId) {
     wrapper.innerHTML = "";
     images = [];
     loaded = [];
-    currentIndex = 0;
+    currentIndex = -1;
 
-    const MAX_TRY = 10;
+    const MAX_TRY = 10; // max images to try per product
 
-    for (let i = 1; i <= MAX_TRY; i++) {
+    for (let i = 0; i < MAX_TRY; i++) {
         const img = document.createElement("img");
-        img.src = `projectimg/${productId}/${i}.jpg`;
+        img.src = `projectimg/${productId}/${i + 1}.jpg`;
         img.className = "slide";
         img.style.display = "none";
         img.draggable = false;
@@ -26,17 +26,19 @@ function openProduct(productId) {
         img.onload = () => {
             loaded[i] = true;
 
-            // show first image immediately
-            if (images.length === 0) {
-                img.style.display = "block";
+            // show first loaded image instantly
+            if (currentIndex === -1) {
                 currentIndex = i;
+                img.style.display = "block";
             }
         };
 
-        img.onerror = () => {};
+        img.onerror = () => {
+            // ignore missing images
+        };
 
+        images.push(img);
         wrapper.appendChild(img);
-        images[i] = img;
     }
 
     const desc = document.getElementById(`desc-${productId}`);
@@ -47,21 +49,40 @@ function openProduct(productId) {
     modal.classList.remove("hidden");
 }
 
+// ===== SLIDE CONTROL (LOOPING) =====
+
+function nextSlide() {
+    showImage(getLoopedIndex(1));
+}
+
+function prevSlide() {
+    showImage(getLoopedIndex(-1));
+}
+
+function getLoopedIndex(step) {
+    let idx = currentIndex;
+
+    for (let i = 0; i < images.length; i++) {
+        idx = idx + step;
+
+        if (idx >= images.length) idx = 0;
+        if (idx < 0) idx = images.length - 1;
+
+        if (loaded[idx]) return idx;
+    }
+
+    return currentIndex; // fallback (should not happen)
+}
+
 function showImage(nextIndex) {
-    if (!loaded[nextIndex]) return;
+    if (nextIndex === currentIndex) return;
 
     images[currentIndex].style.display = "none";
     images[nextIndex].style.display = "block";
     currentIndex = nextIndex;
 }
 
-function nextSlide() {
-    showImage(currentIndex + 1);
-}
-
-function prevSlide() {
-    showImage(currentIndex - 1);
-}
+// ===== SWIPE =====
 
 function enableSwipe(el) {
     el.onmousedown = e => startX = e.clientX;
@@ -79,6 +100,9 @@ function handleSwipe(endX) {
     else prevSlide();
 }
 
+// ===== CLOSE =====
+
 function closeProduct() {
     document.getElementById("productModal").classList.add("hidden");
 }
+
