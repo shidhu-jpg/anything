@@ -1,4 +1,5 @@
 let images = [];
+let loaded = [];
 let currentIndex = 0;
 let startX = 0;
 
@@ -8,11 +9,10 @@ function openProduct(productId) {
 
     wrapper.innerHTML = "";
     images = [];
+    loaded = [];
     currentIndex = 0;
 
-    // Try loading images 1.jpg → 10.jpg (safe upper limit)
     const MAX_TRY = 10;
-    let loadedCount = 0;
 
     for (let i = 1; i <= MAX_TRY; i++) {
         const img = new Image();
@@ -21,25 +21,24 @@ function openProduct(productId) {
         img.style.display = "none";
         img.draggable = false;
 
-        img.onload = () => {
-            wrapper.appendChild(img);
-            images.push(img);
+        loaded[i - 1] = false;
 
-            // show first successfully loaded image
-            if (loadedCount === 0) {
+        img.onload = () => {
+            loaded[i - 1] = true;
+            images[i - 1] = img;
+            wrapper.appendChild(img);
+
+            // show first loaded image only once
+            if (currentIndex === 0 && loaded[0]) {
                 img.style.display = "block";
             }
-
-            loadedCount++;
         };
 
-        // IMPORTANT: ignore missing images completely
         img.onerror = () => {
-            // do nothing
+            loaded[i - 1] = false;
         };
     }
 
-    // description
     const desc = document.getElementById(`desc-${productId}`);
     document.getElementById("descriptionText").innerHTML =
         desc ? desc.innerHTML : "";
@@ -57,35 +56,40 @@ function enableSwipe(el) {
 }
 
 function handleSwipe(endX) {
-    if (images.length <= 1) return;
-
     const diff = startX - endX;
     if (Math.abs(diff) < 40) return;
 
+    let nextIndex = currentIndex;
+
+    if (diff > 0) nextIndex++;
+    else nextIndex--;
+
+    // bounds check
+    if (nextIndex < 0 || nextIndex >= images.length) return;
+
+    // 🔒 CRITICAL FIX: only switch if next image is loaded
+    if (!loaded[nextIndex]) return;
+
     images[currentIndex].style.display = "none";
-
-    if (diff > 0 && currentIndex < images.length - 1) {
-        currentIndex++;
-    } else if (diff < 0 && currentIndex > 0) {
-        currentIndex--;
-    }
-
+    currentIndex = nextIndex;
     images[currentIndex].style.display = "block";
 }
 
-// buttons still work
+// buttons
 function nextSlide() {
-    if (currentIndex < images.length - 1) {
+    const next = currentIndex + 1;
+    if (loaded[next]) {
         images[currentIndex].style.display = "none";
-        currentIndex++;
+        currentIndex = next;
         images[currentIndex].style.display = "block";
     }
 }
 
 function prevSlide() {
-    if (currentIndex > 0) {
+    const prev = currentIndex - 1;
+    if (loaded[prev]) {
         images[currentIndex].style.display = "none";
-        currentIndex--;
+        currentIndex = prev;
         images[currentIndex].style.display = "block";
     }
 }
