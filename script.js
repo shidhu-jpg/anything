@@ -1,89 +1,66 @@
 let currentIndex = 0;
 let currentImages = [];
 let startX = 0;
-let endX = 0;
 
-// OPEN PRODUCT
+// CLICK → OPEN FULLSCREEN
 function openProduct(productId) {
-    const swiperWrapper = document.getElementById("swiperWrapper");
-    swiperWrapper.innerHTML = "";
+    const modal = document.getElementById("productModal");
+    const wrapper = document.getElementById("swiperWrapper");
+
+    wrapper.innerHTML = "";
     currentImages = [];
     currentIndex = 0;
 
-    const TOTAL_IMAGES = 5; // change if needed
+    const TOTAL_IMAGES = 5; // adjust if needed
 
     for (let i = 1; i <= TOTAL_IMAGES; i++) {
         const img = document.createElement("img");
         img.src = `projectimg/${productId}/${i}.jpg`;
         img.className = "slide";
-        img.draggable = false; // IMPORTANT
-        swiperWrapper.appendChild(img);
+        img.draggable = false;
+        img.style.display = "none";
+        wrapper.appendChild(img);
         currentImages.push(img);
     }
 
-    showSlide(0);
+    // show first image immediately
+    currentImages[0].style.display = "block";
 
     // description
     const desc = document.getElementById(`desc-${productId}`);
     document.getElementById("descriptionText").innerHTML =
         desc ? desc.innerHTML : "";
 
-    addSwipe(swiperWrapper);
+    enableSwipe(wrapper);
 
-    document.getElementById("productModal").classList.remove("hidden");
+    modal.classList.remove("hidden");
 }
 
-// SHOW IMAGE (NO BLANK)
-function showSlide(index) {
-    currentImages.forEach((img, i) => {
-        img.style.display = i === index ? "block" : "none";
-    });
+// SWIPE LOGIC
+function enableSwipe(el) {
+    el.ontouchstart = e => startX = e.touches[0].clientX;
+    el.ontouchend = e => handleSwipe(e.changedTouches[0].clientX);
+
+    el.onmousedown = e => startX = e.clientX;
+    el.onmouseup = e => handleSwipe(e.clientX);
 }
 
-// NEXT / PREV
-function nextSlide() {
-    if (currentIndex < currentImages.length - 1) {
-        currentIndex++;
-        showSlide(currentIndex);
-    }
-}
-
-function prevSlide() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        showSlide(currentIndex);
-    }
-}
-
-// PURE SWIPE LOGIC
-function addSwipe(element) {
-    element.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-    });
-
-    element.addEventListener("touchend", e => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
-
-    // mouse swipe (desktop)
-    element.addEventListener("mousedown", e => {
-        startX = e.clientX;
-    });
-
-    element.addEventListener("mouseup", e => {
-        endX = e.clientX;
-        handleSwipe();
-    });
-}
-
-function handleSwipe() {
+function handleSwipe(endX) {
     const diff = startX - endX;
+    if (Math.abs(diff) < 40) return;
 
-    if (Math.abs(diff) < 40) return; // prevents accidental swipe
+    currentImages[currentIndex].style.display = "none";
 
-    if (diff > 0) {
-        nextSlide(); // swipe left
-    } else {
-        prevSlide(); // swipe right
+    if (diff > 0 && currentIndex < currentImages.length - 1) {
+        currentIndex++;
+    } else if (diff < 0 && currentIndex > 0) {
+        currentIndex--;
+    }
 
+    currentImages[currentIndex].style.display = "block";
+}
+
+// CLOSE
+function closeProduct() {
+    document.getElementById("productModal").classList.add("hidden");
+}
