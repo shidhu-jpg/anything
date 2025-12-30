@@ -1,58 +1,56 @@
-let currentSlide = 0;
+let currentIndex = 0;
 let currentImages = [];
 
-function openProduct(id) {
-    document.getElementById("productModal").classList.remove("hidden");
-
-    // Load images
-    const wrapper = document.getElementById("swiperWrapper");
-    wrapper.innerHTML = "";
+// OPEN PRODUCT
+function openProduct(productId) {
+    const swiperWrapper = document.getElementById("swiperWrapper");
+    swiperWrapper.innerHTML = "";
     currentImages = [];
+    currentIndex = 0;
 
-    let i = 1;
-    while (true) {
-        const imgPath = `products/${id}/${i}.jpg`;
-        const img = new Image();
-        img.src = imgPath;
+    // CHANGE THIS IF IMAGE COUNT IS DIFFERENT
+    const TOTAL_IMAGES = 5;
 
-        img.onerror = () => {};
-        img.onload = () => {
-            img.className = "slide";
-            wrapper.appendChild(img);
-            currentImages.push(img);
-            updateSlide();
-        };
-
-        if (i > 10) break; // safety limit
-        i++;
+    for (let i = 1; i <= TOTAL_IMAGES; i++) {
+        const img = document.createElement("img");
+        img.src = `projectimg/${productId}/${i}.jpg`;
+        img.className = "slide";
+        swiperWrapper.appendChild(img);
+        currentImages.push(img);
     }
 
-    // Load manual description
-    const desc = document.getElementById("desc-" + id);
-    document.getElementById("descriptionText").innerHTML =
-        desc ? desc.innerHTML : "No description added.";
+    showSlide(0);
 
-    currentSlide = 0;
+    // Description
+    const desc = document.getElementById(`desc-${productId}`);
+    document.getElementById("descriptionText").innerHTML =
+        desc ? desc.innerHTML : "No description";
+
+    document.getElementById("productModal").classList.remove("hidden");
 }
 
+// SHOW SLIDE
+function showSlide(index) {
+    currentImages.forEach((img, i) => {
+        img.style.display = i === index ? "block" : "none";
+    });
+}
+
+// NEXT
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    showSlide(currentIndex);
+}
+
+// PREVIOUS
+function prevSlide() {
+    currentIndex =
+        (currentIndex - 1 + currentImages.length) % currentImages.length;
+    showSlide(currentIndex);
+}
+
+// CLOSE
 function closeProduct() {
     document.getElementById("productModal").classList.add("hidden");
 }
 
-function updateSlide() {
-    currentImages.forEach((img, index) => {
-        img.style.display = index === currentSlide ? "block" : "none";
-    });
-}
-
-function nextSlide() {
-    if (currentImages.length === 0) return;
-    currentSlide = (currentSlide + 1) % currentImages.length;
-    updateSlide();
-}
-
-function prevSlide() {
-    if (currentImages.length === 0) return;
-    currentSlide = (currentSlide - 1 + currentImages.length) % currentImages.length;
-    updateSlide();
-}
