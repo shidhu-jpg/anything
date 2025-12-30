@@ -1,5 +1,5 @@
-let currentIndex = 0;
 let images = [];
+let currentIndex = 0;
 let startX = 0;
 
 function openProduct(productId) {
@@ -10,21 +10,34 @@ function openProduct(productId) {
     images = [];
     currentIndex = 0;
 
-    // IMPORTANT: set correct number of images
-    const TOTAL_IMAGES = 5;
+    // Try loading images 1.jpg → 10.jpg (safe upper limit)
+    const MAX_TRY = 10;
+    let loadedCount = 0;
 
-    for (let i = 1; i <= TOTAL_IMAGES; i++) {
-        const img = document.createElement("img");
+    for (let i = 1; i <= MAX_TRY; i++) {
+        const img = new Image();
         img.src = `projectimg/${productId}/${i}.jpg`;
         img.className = "slide";
         img.style.display = "none";
         img.draggable = false;
-        wrapper.appendChild(img);
-        images.push(img);
-    }
 
-    // show first image instantly
-    images[0].style.display = "block";
+        img.onload = () => {
+            wrapper.appendChild(img);
+            images.push(img);
+
+            // show first successfully loaded image
+            if (loadedCount === 0) {
+                img.style.display = "block";
+            }
+
+            loadedCount++;
+        };
+
+        // IMPORTANT: ignore missing images completely
+        img.onerror = () => {
+            // do nothing
+        };
+    }
 
     // description
     const desc = document.getElementById(`desc-${productId}`);
@@ -32,7 +45,6 @@ function openProduct(productId) {
         desc ? desc.innerHTML : "";
 
     enableSwipe(wrapper);
-
     modal.classList.remove("hidden");
 }
 
@@ -45,6 +57,8 @@ function enableSwipe(el) {
 }
 
 function handleSwipe(endX) {
+    if (images.length <= 1) return;
+
     const diff = startX - endX;
     if (Math.abs(diff) < 40) return;
 
