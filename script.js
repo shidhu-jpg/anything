@@ -15,28 +15,28 @@ function openProduct(productId) {
     const MAX_TRY = 10;
 
     for (let i = 1; i <= MAX_TRY; i++) {
-        const img = new Image();
+        const img = document.createElement("img");
         img.src = `projectimg/${productId}/${i}.jpg`;
         img.className = "slide";
         img.style.display = "none";
         img.draggable = false;
 
-        loaded[i - 1] = false;
+        loaded[i] = false;
 
         img.onload = () => {
-            loaded[i - 1] = true;
-            images[i - 1] = img;
-            wrapper.appendChild(img);
+            loaded[i] = true;
 
-            // show first loaded image only once
-            if (currentIndex === 0 && loaded[0]) {
+            // show first image immediately
+            if (images.length === 0) {
                 img.style.display = "block";
+                currentIndex = i;
             }
         };
 
-        img.onerror = () => {
-            loaded[i - 1] = false;
-        };
+        img.onerror = () => {};
+
+        wrapper.appendChild(img);
+        images[i] = img;
     }
 
     const desc = document.getElementById(`desc-${productId}`);
@@ -45,6 +45,22 @@ function openProduct(productId) {
 
     enableSwipe(wrapper);
     modal.classList.remove("hidden");
+}
+
+function showImage(nextIndex) {
+    if (!loaded[nextIndex]) return;
+
+    images[currentIndex].style.display = "none";
+    images[nextIndex].style.display = "block";
+    currentIndex = nextIndex;
+}
+
+function nextSlide() {
+    showImage(currentIndex + 1);
+}
+
+function prevSlide() {
+    showImage(currentIndex - 1);
 }
 
 function enableSwipe(el) {
@@ -59,39 +75,8 @@ function handleSwipe(endX) {
     const diff = startX - endX;
     if (Math.abs(diff) < 40) return;
 
-    let nextIndex = currentIndex;
-
-    if (diff > 0) nextIndex++;
-    else nextIndex--;
-
-    // bounds check
-    if (nextIndex < 0 || nextIndex >= images.length) return;
-
-    // 🔒 CRITICAL FIX: only switch if next image is loaded
-    if (!loaded[nextIndex]) return;
-
-    images[currentIndex].style.display = "none";
-    currentIndex = nextIndex;
-    images[currentIndex].style.display = "block";
-}
-
-// buttons
-function nextSlide() {
-    const next = currentIndex + 1;
-    if (loaded[next]) {
-        images[currentIndex].style.display = "none";
-        currentIndex = next;
-        images[currentIndex].style.display = "block";
-    }
-}
-
-function prevSlide() {
-    const prev = currentIndex - 1;
-    if (loaded[prev]) {
-        images[currentIndex].style.display = "none";
-        currentIndex = prev;
-        images[currentIndex].style.display = "block";
-    }
+    if (diff > 0) nextSlide();
+    else prevSlide();
 }
 
 function closeProduct() {
