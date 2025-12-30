@@ -776,10 +776,13 @@ body {
         text-align: center;
     }
 }
+
 .slide {
     width: 100%;
     max-height: 350px;
     object-fit: contain;
+    user-select: none;
+    touch-action: pan-y;
 }
 
 >>>>>>> 4484e79ec41e5ce4684da11105eb1086a601b936
